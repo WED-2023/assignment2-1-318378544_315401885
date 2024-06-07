@@ -32,6 +32,12 @@ const routes = [
     name: "notFound",
     component: NotFound,
   },
+  {
+    path: '/about',
+    name: 'about',
+    component: () => import('./pages/AboutPage.vue'),
+  },
+  
 ];
 
 export default routes;
