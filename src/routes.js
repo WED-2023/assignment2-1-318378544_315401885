@@ -23,7 +23,7 @@ const routes = [
     component: () => import("./pages/SearchPage"),
   },
   {
-    path: "   ",
+    path: "/recipe/:recipeId",
     name: "recipe",
     component: () => import("./pages/RecipeViewPage"),
   },
@@ -37,7 +37,26 @@ const routes = [
     name: 'about',
     component: () => import('./pages/AboutPage.vue'),
   },
-  
+  {
+    path: '/addrecipe',
+    name: 'addrecipe',
+    component: () => import('./pages/AddNewRecipe.vue'),
+  },
+  {
+    path: '/favorites',
+    name: 'favorites',
+    component: () => import('./pages/FavoritesPage.vue'),
+  },
+  {
+    path: '/myrecipes',
+    name: 'myrecipes',
+    component: () => import('./pages/MyRecipesPage.vue'),
+  },
+  {
+    path: '/familyrecipes',
+    name: 'familyrecipes',
+    component: () => import('./pages/FamilyRecipesPage.vue'),
+  },
 ];
 
 export default routes;

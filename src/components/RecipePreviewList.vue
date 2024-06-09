@@ -47,7 +47,7 @@ export default {
         //   this.$root.store.server_domain + "/recipes/random",
         // );
 
-        const amountToFetch = 2;
+        const amountToFetch = 3;
         const response = mockGetRecipesPreview(amountToFetch);
 
         console.log(response);

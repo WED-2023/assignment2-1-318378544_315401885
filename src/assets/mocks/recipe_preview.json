@@ -1,12 +1,36 @@
-{
-    "id": 716429,
-    "image": "https://img.spoonacular.com/recipes/716429-556x370.jpg",
-    "title": "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs",
-    "readyInMinutes": 45,
-    "aggregateLikes": 209,
-    "vegetarian": false,
-    "vegan": false,
-    "glutenFree": true,
-    "summary": "You can never have too many main course recipes, so give Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs a try. One serving contains <b>543 calories</b>, <b>17g of protein</b>, and <b>16g of fat</b>. For <b>$1.57 per serving</b>, this recipe <b>covers 22%</b> of your daily requirements of vitamins and minerals. This recipe serves 2. A mixture of butter, white wine, pasta, and a handful of other ingredients are all it takes to make this recipe so yummy. 209 people have tried and liked this recipe. It is brought to you by fullbellysisters.blogspot.com. From preparation to the plate, this recipe takes approximately <b>45 minutes</b>. Taking all factors into account, this recipe <b>earns a spoonacular score of 83%</b>, which is tremendous. If you like this recipe, take a look at these similar recipes: <a href=\"https://spoonacular.com/recipes/pasta-with-garlic-scallions-cauliflower-breadcrumbs-1230187\">Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs</a>, <a href=\"https://spoonacular.com/recipes/pasta-with-garlic-scallions-cauliflower-breadcrumbs-1229807\">Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs</a>, and <a href=\"https://spoonacular.com/recipes/pasta-with-garlic-scallions-cauliflower-breadcrumbs-1229669\">Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs</a>."
-
-}
+[
+    {
+      "id": 716429,
+      "image": "https://img.spoonacular.com/recipes/716429-556x370.jpg",
+      "title": "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs",
+      "readyInMinutes": 45,
+      "aggregateLikes": 209,
+      "vegetarian": false,
+      "vegan": false,
+      "glutenFree": true,
+      "summary": "You can never have too many main course recipes, so give Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs a try. One serving contains <b>543 calories</b>, <b>17g of protein</b>, and <b>16g of fat</b>. For <b>$1.57 per serving</b>, this recipe <b>covers 22%</b> of your daily requirements of vitamins and minerals. This recipe serves 2. A mixture of butter, white wine, pasta, and a handful of other ingredients are all it takes to make this recipe so yummy. 209 people have tried and liked this recipe. It is brought to you by fullbellysisters.blogspot.com. From preparation to the plate, this recipe takes approximately <b>45 minutes</b>. Taking all factors into account, this recipe <b>earns a spoonacular score of 83%</b>, which is tremendous. If you like this recipe, take a look at these similar recipes: <a href=\"https://spoonacular.com/recipes/pasta-with-garlic-scallions-cauliflower-breadcrumbs-1230187\">Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs</a>, <a href=\"https://spoonacular.com/recipes/pasta-with-garlic-scallions-cauliflower-breadcrumbs-1229807\">Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs</a>, and <a href=\"https://spoonacular.com/recipes/pasta-with-garlic-scallions-cauliflower-breadcrumbs-1229669\">Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs</a>."
+    },
+    {
+      "id": 716430,
+      "image": "https://www.allrecipes.com/thmb/ixtJjxqjwI-NR9s_eO5v7vO-vzE=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/970837-376e87fe0b594d9ea7993ef61a503791.jpg",
+      "title": "Easy Asian Pasta Salad",
+      "readyInMinutes": 60,
+      "aggregateLikes": 109,
+      "vegetarian": true,
+      "vegan": false,
+      "glutenFree": true,
+      "summary": "Cool pasta salad on a hot summer day is the perfect BBQ side dish. It is always one of the first things to go."
+    },
+    {
+      "id": 716431,
+      "image": "https://www.allrecipes.com/thmb/sXvCPNr6s0jYrtgFX4RgjvQyZRY=/0x512/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/70208_AmeliasTunaMacaroniSalad_ddmfs_4x3_2351-3ed4fab787fe497a8464674df8a592ad.jpg",
+      "title": "Tuna Macaroni Salad",
+      "readyInMinutes": 40,
+      "aggregateLikes": 300,
+      "vegetarian": true,
+      "vegan": false,
+      "glutenFree": false,
+      "summary": "This tuna macaroni salad is easy to make with cooked pasta, celery, peas, relish, and mayonnaise. It will remind you of Grandma's! Enjoy this basic comfort food when the weather is warm."
+    }
+  ]
+  

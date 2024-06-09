@@ -16,16 +16,16 @@
       <!-- Registered user -->
       <span v-else class="user-info">
         <span class="nav-text">Hello {{ $root.store.username }}</span>
-        <router-link :to="{ name: 'addRecipe' }" class="nav-link">Add New Recipe</router-link>
+        <router-link :to="{ name: 'addrecipe' }" class="nav-link">Add New Recipe</router-link>
         <div class="dropdown" @mouseenter="openDropdown" @mouseleave="closeDropdown">
-          <button class="nav-link dropbtn">Personal</button>
+          <button class="nav-link">Personal</button>
           <div v-if="dropdownOpen" class="dropdown-content">
-            <router-link :to="{ name: 'myFavoriteRecipes' }" class="dropdown-link">My Favorite Recipes</router-link>
-            <router-link :to="{ name: 'familyRecipes' }" class="dropdown-link">My Family Recipes</router-link>
-            <router-link :to="{ name: 'myRecipes' }" class="dropdown-link">My Recipes</router-link>
+            <router-link :to="{ name: 'favorites' }" class="dropdown-link">My Favorite Recipes</router-link>
+            <router-link :to="{ name: 'familyrecipes' }" class="dropdown-link">My Family Recipes</router-link>
+            <router-link :to="{ name: 'myrecipes' }" class="dropdown-link">My Recipes</router-link>
           </div>
         </div>
-        <button @click="Logout" class="nav-link logout-btn">Logout</button>
+        <button @click="Logout" class="nav-link">Logout</button>
       </span>
     </div>
     <router-view />
@@ -118,16 +118,16 @@ export default {
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #fff; /* רקע שמנת */
+  background-color: #cd5c5c; /* רקע שמנת */
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
   border-radius: 5px; /* פינות עגולות */
-  border: 1px solid #ffcc99; /* גבול עדין */
+  //border: 1px solid #ffcc99; /* גבול עדין */
 }
 
 .dropdown-content .dropdown-link {
-  color: #8b4513; /* צבע חום */
+  color: #fff; /* צבע חום */
   padding: 12px 16px;
   text-decoration: none;
   display: block;
@@ -137,7 +137,7 @@ export default {
 }
 
 .dropdown-content .dropdown-link:hover {
-  background-color: #ffcc99;
+  background-color: #74064f;
   color: #fff;
 }
 
@@ -145,40 +145,11 @@ export default {
 .dropdown-content.show {
   display: block;
 }
-
-.dropbtn {
-  background: none;
-  border: 1px solid #ffcc99; /* גבול עדין */
-  color: #8b4513; /* צבע חום */
-  cursor: pointer;
-  padding: 8px 16px;
-  font-weight: bold;
-  transition: background-color 0.3s;
-  border-radius: 5px; /* פינות עגולות */
-  background-color: #fff; /* רקע שמנת */
+button.nav-link {
+  border: none;
+  outline: none;
 }
 
-.dropbtn:hover {
-  background-color: #ffcc99;
-  color: #fff;
-}
-
-.logout-btn {
-  background: none;
-  border: 1px solid #ffcc99; /* גבול עדין */
-  color: #8b4513; /* צבע חום */
-  cursor: pointer;
-  font-weight: bold;
-  padding: 8px 16px;
-  transition: background-color 0.3s;
-  border-radius: 5px; /* פינות עגולות */
-  background-color: #fff; /* רקע שמנת */
-}
-
-.logout-btn:hover {
-  background-color: #ffcc99;
-  color: #fff;
-}
 
 .user-info {
   display: flex;

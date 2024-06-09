@@ -130,6 +130,7 @@ export default {
   display: flex;
   flex-direction: column;
   width: 300px; /* גודל קבוע לכל הקופסאות */
+  height: 450px; /* גובה מוגדל */
   margin: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
@@ -143,13 +144,13 @@ export default {
 
 .recipe-preview > .recipe-body {
   width: 100%;
-  height: auto;
+  height: 200px; /* גובה קבוע לתמונה */
   position: relative;
 }
 .recipe-preview .recipe-body .image-container {
   position: relative;
   width: 100%;
-  height: 200px; /* גובה קבוע לתמונה */
+  height: 100%;
   overflow: hidden;
 }
 .recipe-preview .recipe-body .recipe-image {
@@ -180,21 +181,27 @@ export default {
 }
 .recipe-preview .recipe-footer {
   padding: 10px;
-  background-color: #fff;
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   justify-content: space-between;
-  height: 100%; /* גובה קבוע */
 }
 .recipe-preview .recipe-footer .recipe-info {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
+  text-align: center; /* יישור הטקסט */
 }
 .recipe-preview .recipe-footer .recipe-title {
   font-size: 14pt;
   font-weight: bold;
   margin-bottom: 5px;
+  max-height: 3em; /* גובה מקסימלי */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* הגבלת מספר השורות */
+  -webkit-box-orient: vertical;
 }
 .recipe-preview .recipe-footer .recipe-time {
   font-size: 10pt;
@@ -229,7 +236,6 @@ export default {
   color: #4caf50; /* צבע ירוק לסימן וי */
 }
 .likes {
-  align-self: flex-end;
   font-size: 12pt;
   color: #888;
 }
@@ -237,7 +243,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
+  margin-top: auto; /* כדי לוודא שזה נמצא בתחתית */
 }
 .favorite-btn {
   background: none;
@@ -256,6 +262,4 @@ export default {
   color: #b1ecb3; /* צבע העין במצב נצפה */
 }
 </style>
-
-
 

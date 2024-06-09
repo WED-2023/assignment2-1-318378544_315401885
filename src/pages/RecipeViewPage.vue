@@ -43,6 +43,7 @@
 
 <script>
 import { mockGetRecipeFullDetails } from "../services/recipes.js";
+
 export default {
   data() {
     return {
@@ -51,23 +52,12 @@ export default {
   },
   async created() {
     try {
-      let response;
-      // response = this.$route.params.response;
+      console.log("Recipe ID from route params:", this.$route.params.recipeId);
+      let response = mockGetRecipeFullDetails(this.$route.params.recipeId);
+      console.log("Response from mockGetRecipeFullDetails:", response);
 
-      try {
-        // response = await this.axios.get(
-        //   this.$root.store.server_domain + "/recipes/" + this.$route.params.recipeId,
-        //   {
-        //     withCredentials: true
-        //   }
-        // );
-
-        response = mockGetRecipeFullDetails(this.$route.params.recipeId);
-
-        // console.log("response.status", response.status);
-        if (response.status !== 200) this.$router.replace("/NotFound");
-      } catch (error) {
-        console.log("error.response.status", error.response.status);
+      if (!response || !response.data || !response.data.recipe) {
+        console.error("Recipe not found, redirecting to NotFound");
         this.$router.replace("/NotFound");
         return;
       }
@@ -84,8 +74,11 @@ export default {
 
       let _instructions = analyzedInstructions
         .map((fstep) => {
-          fstep.steps[0].step = fstep.name + fstep.steps[0].step;
-          return fstep.steps;
+          if (fstep.steps.length > 0) {
+            fstep.steps[0].step = fstep.name + fstep.steps[0].step;
+            return fstep.steps;
+          }
+          return [];
         })
         .reduce((a, b) => [...a, ...b], []);
 
@@ -101,8 +94,10 @@ export default {
       };
 
       this.recipe = _recipe;
+      console.log("Recipe loaded:", this.recipe);
     } catch (error) {
-      console.log(error);
+      console.error("Error in created hook:", error);
+      this.$router.replace("/NotFound");
     }
   }
 };
