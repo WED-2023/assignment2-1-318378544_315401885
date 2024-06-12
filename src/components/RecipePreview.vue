@@ -6,14 +6,11 @@
         :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
         @click.native="markAsViewed"
       >
-        <div v-if="image_load" class="image-container">
+        <div class="image-container">
           <img :src="recipe.image" class="recipe-image" />
           <div class="overlay">
             <span>View Recipe</span>
           </div>
-        </div>
-        <div v-else>
-          <p>Loading image...</p>
         </div>
       </router-link>
     </div>
@@ -99,7 +96,7 @@ export default {
   },
   data() {
     return {
-      image_load: false,
+      //image_load: false,
       isFavorite: false,
       favoriteIconSize: 35, // הוספת משתנה לגודל הכוכב
     };

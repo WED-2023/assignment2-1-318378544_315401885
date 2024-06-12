@@ -16,7 +16,7 @@
       <!-- Registered user -->
       <span v-else class="user-info">
         <span class="nav-text">Hello {{ $root.store.username }}</span>
-        <router-link :to="{ name: 'addrecipe' }" class="nav-link">Add New Recipe</router-link>
+        <b-button :class="['custom-nav-link']" @click="showNewRecipeModal = true">Add New Recipe</b-button>
         <div class="dropdown" @mouseenter="openDropdown" @mouseleave="closeDropdown">
           <button class="nav-link">Personal</button>
           <div v-if="dropdownOpen" class="dropdown-content">
@@ -29,15 +29,27 @@
       </span>
     </div>
     <router-view />
+    <NewRecipeModal :show="showNewRecipeModal" @recipeCreated="fetchRecipes" @close="showNewRecipeModal = false" />
   </div>
 </template>
 
+
+
+
 <script>
+
+import NewRecipeModal from './components/NewRecipeModal.vue';
+
 export default {
   name: "App",
+  components: {
+    NewRecipeModal
+  },
+
   data() {
     return {
       dropdownOpen: false,
+      showNewRecipeModal: false
     };
   },
   methods: {
@@ -54,8 +66,13 @@ export default {
       this.$router.push("/").catch(() => {
         this.$forceUpdate();
       });
+    },
+    fetchRecipes() {
+      // פונקציה לעדכון רשימת המתכונים לאחר יצירת מתכון חדש
+      this.$root.store.fetchRecipes();
     }
   }
+  
 };
 </script>
 
@@ -75,38 +92,52 @@ export default {
   align-items: center;
   justify-content: space-between;
   padding: 20px;
-  background-color: white; /* רקע שמנת */
-  //border-bottom: 2px solid #a55505; /* קו תחתון */
+  background-color: white; 
 }
 
 .nav-link {
   font-weight: bold;
-  color: #8b4513; /* צבע חום */
+  color: #8b4513; 
   text-decoration: none;
   padding: 8px 16px;
   transition: background-color 0.3s, color 0.3s;
-  border-radius: 5px; /* פינות עגולות */
-  background-color: #fff; /* רקע שמנת */
-  //border: 1px solid #ffcc99; /* גבול עדין */
+  border-radius: 5px; 
+  background-color: #fff; 
+  border: none;
+  display: inline-block;
+  cursor: pointer;
 }
 
-.nav-link:hover {
-  background-color: #74064f; /* שינוי צבע רקע ב-hover */
-  color: #fff;
+.custom-nav-link {
+  font-weight: bold;
+  color: #8b4513 ; 
+  text-decoration: none;
+  padding: 8px 16px ;
+  transition: background-color 0.3s, color 0.3s ;
+  border-radius: 5px ; 
+  background-color: #fff ; 
+  border: none ;
+  display: inline-block;
+  cursor: pointer ;
+}
+
+.custom-nav-link:hover {
+  background-color: #74064f !important; 
+  color: #fff !important;
 }
 
 .router-link-active, .router-link-exact-active {
-  background-color: #cd5c5c; /* צבע רקע להדגשה */
-  //border-bottom: 2px solid #ff9933; /* קו תחתון להדגשה */
+  background-color: #cd5c5c; 
+  //border-bottom: 2px solid #ff9933; 
   font-weight: bold;
   color: #fff;
   text-decoration: none;
-  border-radius: 5px; /* פינות עגולות */
+  border-radius: 5px; 
 }
 
 .nav-text {
   font-weight: bold;
-  color: #8b4513; /* צבע חום */
+  color: #8b4513; 
   padding: 8px 16px;
 }
 
@@ -118,22 +149,21 @@ export default {
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #cd5c5c; /* רקע שמנת */
+  background-color: #cd5c5c; 
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
-  border-radius: 5px; /* פינות עגולות */
-  //border: 1px solid #ffcc99; /* גבול עדין */
+  border-radius: 5px; 
 }
 
 .dropdown-content .dropdown-link {
-  color: #fff; /* צבע חום */
+  color: #fff; 
   padding: 12px 16px;
   text-decoration: none;
   display: block;
   transition: background-color 0.3s, color 0.3s;
   cursor: pointer;
-  border-radius: 5px; /* פינות עגולות */
+  border-radius: 5px; 
 }
 
 .dropdown-content .dropdown-link:hover {
@@ -145,12 +175,28 @@ export default {
 .dropdown-content.show {
   display: block;
 }
-button.nav-link {
+
+button.nav-link, button.custom-nav-link {
   border: none;
   outline: none;
+  font-weight: bold;
+  color: #8b4513 ; 
+  text-decoration: none;
+  padding: 8px 16px ;
+  transition: background-color 0.3s, color 0.3s ;
+  border-radius: 5px ; 
+  background-color: #fff ; 
 }
 
+button.nav-link:hover, button.custom-nav-link:hover {
+  background-color: #74064f !important; 
+  color: #fff !important;
+}
 
+.nav-link:hover{
+  background-color: #74064f !important; 
+  color: #fff !important;
+}
 .user-info {
   display: flex;
   align-items: center;
@@ -158,5 +204,4 @@ button.nav-link {
   flex-grow: 1;
   justify-content: flex-end;
 }
-
 </style>

@@ -1,45 +1,46 @@
 <template>
   <div class="container">
     <div v-if="recipe">
-      <div class="recipe-header mt-3 mb-4">
-        <h1>{{ recipe.title }}</h1>
-        <img :src="recipe.image" class="center" />
+      <div class="recipe-header mt-3 mb-4 text-center">
+        <h1 class="recipe-title">{{ recipe.title }}</h1>
+        <img :src="recipe.image" class="recipe-image center" />
+        <div class="recipe-info-container">
+          <div class="recipe-info">Ready in {{ recipe.readyInMinutes }} minutes</div>
+          <div class="recipe-info">Likes: {{ recipe.aggregateLikes }} likes</div>
+          <div class="recipe-info">Vegetarian: {{ recipe.vegetarian ? 'Yes' : 'No' }}</div>
+          <div class="recipe-info">Gluten-Free: {{ recipe.glutenFree ? 'Yes' : 'No' }}</div>
+          <div class="recipe-info">Vegan: {{ recipe.vegan ? 'Yes' : 'No' }}</div>
+        </div>
       </div>
       <div class="recipe-body">
         <div class="wrapper">
-          <div class="wrapped">
-            <div class="mb-3">
-              <div>Ready in {{ recipe.readyInMinutes }} minutes</div>
-              <div>Likes: {{ recipe.aggregateLikes }} likes</div>
-            </div>
-            Ingredients:
+          <div class="wrapped ingredients">
+            <h2>Ingredients:</h2>
             <ul>
               <li
                 v-for="(r, index) in recipe.extendedIngredients"
                 :key="index + '_' + r.id"
+                class="ingredient-item"
               >
                 {{ r.original }}
               </li>
             </ul>
           </div>
-          <div class="wrapped">
-            Instructions:
+          <div class="wrapped instructions">
+            <h2>Instructions:</h2>
             <ol>
-              <li v-for="s in recipe._instructions" :key="s.number">
+              <li v-for="s in recipe.instructions" :key="s.number" class="instruction-step">
                 {{ s.step }}
               </li>
             </ol>
           </div>
         </div>
       </div>
-      <!-- <pre>
-      {{ $route.params }}
-      {{ recipe }}
-    </pre
-      > -->
     </div>
   </div>
 </template>
+
+
 
 <script>
 import { mockGetRecipeFullDetails } from "../services/recipes.js";
@@ -69,7 +70,10 @@ export default {
         aggregateLikes,
         readyInMinutes,
         image,
-        title
+        title,
+        vegetarian,
+        glutenFree,
+        vegan
       } = response.data.recipe;
 
       let _instructions = analyzedInstructions
@@ -82,7 +86,7 @@ export default {
         })
         .reduce((a, b) => [...a, ...b], []);
 
-      let _recipe = {
+      this.recipe = {
         instructions,
         _instructions,
         analyzedInstructions,
@@ -90,10 +94,13 @@ export default {
         aggregateLikes,
         readyInMinutes,
         image,
-        title
+        title,
+        vegetarian,
+        glutenFree,
+        vegan
       };
 
-      this.recipe = _recipe;
+      //this.recipe = _recipe;
       console.log("Recipe loaded:", this.recipe);
     } catch (error) {
       console.error("Error in created hook:", error);
@@ -104,19 +111,89 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.recipe-header {
+  text-align: center;
+}
+
+.recipe-title {
+  font-size: 2em;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.recipe-image {
+  display: block;
+  margin: 0 auto;
+  border-radius: 8px;
+  max-width: 100%;
+  height: auto;
+}
+
+.recipe-info-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+.recipe-info {
+  font-weight: bold;
+  background-color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.recipe-body {
+  margin-top: 20px;
+}
+
 .wrapper {
   display: flex;
+  flex-direction: column;
 }
-.wrapped {
-  width: 50%;
-}
-.center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%;
-}
-/* .recipe-header{
 
-} */
+.wrapped {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.ingredients, .instructions {
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.ingredient-item {
+  margin-bottom: 5px;
+}
+
+.instruction-step {
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+@media (min-width: 768px) {
+  .wrapper {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .wrapped {
+    width: 48%;
+  }
+}
 </style>
+
+
