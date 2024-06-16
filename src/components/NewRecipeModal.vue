@@ -27,11 +27,11 @@
         </div>
         <div class="mb-3">
           <label for="ingredients" class="form-label">Ingredients</label>
-          <textarea v-model="newRecipe.extendedIngredients" class="form-control" id="ingredients" rows="3" required></textarea>
+        <textarea v-model="ingredientsInput" class="form-control" id="ingredients" rows="3" placeholder="Enter ingredients, each on a new line" required></textarea>
         </div>
         <div class="mb-3">
           <label for="instructions" class="form-label">Instructions</label>
-          <textarea v-model="newRecipe.instructions" class="form-control" id="instructions" rows="3" required></textarea>
+        <textarea v-model="instructionsInput" class="form-control" id="instructions" rows="3" placeholder="Enter instructions, each on a new line" required></textarea>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
@@ -45,6 +45,8 @@
       return {
         showModal: this.show,
         newRecipe: {
+          id: Date.now(),
+          isUserCreated: true,
           title: "",
           image: "",
           readyInMinutes: 0,
@@ -52,9 +54,11 @@
           vegetarian: false,
           vegan: false,
           glutenFree: false,
-          extendedIngredients: "",
-          instructions: ""
-        }
+          extendedIngredients: [],
+          instructions: []
+        },
+        ingredientsInput: "", // משתנה טקסט קלט למוצרים
+        instructionsInput: "" // משתנה טקסט קלט להוראות
       };
     },
     watch: {
@@ -69,12 +73,30 @@
     },
     methods: {
       submitRecipe() {
+      // עיבוד נתוני המוצרים וההוראות
+      this.newRecipe.extendedIngredients = this.ingredientsInput.split('\n').map((ingredient, index) => ({
+        id: index,
+        original: ingredient
+      }));
+
+      this.newRecipe.analyzedInstructions = [
+        {
+          name: "Instructions",
+          steps: this.instructionsInput.split('\n').map((step, index) => ({
+            number: index + 1,
+            step: step
+          }))
+        }
+      ];
+
+      console.log("New Recipe Data:", this.newRecipe); // הוספת הדפסת קונסול
         let recipes = JSON.parse(localStorage.getItem('recipes') || '[]');
         recipes.push(this.newRecipe);
         localStorage.setItem('recipes', JSON.stringify(recipes));
         this.showModal = false;
         this.$emit('recipeCreated', this.newRecipe);
         this.$emit('close');
+
       }
     }
   };

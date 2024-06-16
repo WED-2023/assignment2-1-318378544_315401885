@@ -29,8 +29,8 @@
           <div class="wrapped instructions">
             <h2>Instructions:</h2>
             <ol>
-              <li v-for="s in recipe.instructions" :key="s.number" class="instruction-step">
-                {{ s.step }}
+              <li v-for="(instruction, index) in recipe._instructions" :key="index" class="instruction-step">
+                {{ instruction.step }}
               </li>
             </ol>
           </div>
@@ -64,8 +64,8 @@ export default {
       }
 
       let {
-        analyzedInstructions,
-        instructions,
+        analyzedInstructions =[],
+        instructions ,
         extendedIngredients,
         aggregateLikes,
         readyInMinutes,
@@ -76,15 +76,17 @@ export default {
         vegan
       } = response.data.recipe;
 
-      let _instructions = analyzedInstructions
-        .map((fstep) => {
-          if (fstep.steps.length > 0) {
-            fstep.steps[0].step = fstep.name + fstep.steps[0].step;
-            return fstep.steps;
-          }
-          return [];
-        })
-        .reduce((a, b) => [...a, ...b], []);
+      let _instructions = [];
+      if (Array.isArray(analyzedInstructions)) {
+        _instructions = analyzedInstructions
+          .map((fstep) => {
+            if (fstep.steps.length > 0) {
+              return fstep.steps;
+            }
+            return [];
+          })
+          .reduce((a, b) => [...a, ...b], []);
+      }
 
       this.recipe = {
         instructions,
@@ -99,7 +101,7 @@ export default {
         glutenFree,
         vegan
       };
-
+      
       //this.recipe = _recipe;
       console.log("Recipe loaded:", this.recipe);
     } catch (error) {

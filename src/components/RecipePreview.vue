@@ -113,6 +113,7 @@ export default {
     markAsViewed() {
       this.recipe.viewed = true;
       this.$emit('update-recipe', this.recipe); // שליחת עדכון למתכון שנצפה
+      console.log(recipe.viewed)
     },
     toggleFavorite() {
       this.isFavorite = !this.isFavorite;
