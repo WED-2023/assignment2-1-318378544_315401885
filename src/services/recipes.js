@@ -30,3 +30,10 @@ export function mockGetRecipeFullDetails(recipeId) {
     return { data: { recipe: null } };
   }
 }
+export function mockSearchRecipes(query, amount = 1) {
+  const filteredResults = recipe_previews.filter(recipe =>
+    recipe.title.toLowerCase().includes(query.toLowerCase())
+  );
+  const limitedAmount = Math.min(amount, filteredResults.length);
+  return { data: { recipes: filteredResults.slice(0, limitedAmount) } };
+}

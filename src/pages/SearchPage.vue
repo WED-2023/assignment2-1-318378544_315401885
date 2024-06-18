@@ -1,141 +1,174 @@
 <template>
-  <div class="container">
-    <h1 class="title">Search Page</h1>
-    <div class="search-bar">
-      <input v-model="query" @input="searchRecipes" placeholder="Search for recipes..." />
-      <select v-model="resultsLimit" @change="searchRecipes">
+  <div class="container my-4">
+    <h1 class="mb-4">Search Recipes</h1>
+    <div class="input-group mb-3">
+      <input 
+        type="text" 
+        class="form-control" 
+        v-model="searchQuery" 
+        placeholder="Search for recipes..." 
+        @keyup.enter="searchRecipes"
+      />
+      <div class="input-group-append">
+        <button class="btn btn-primary" @click="searchRecipes">Search</button>
+      </div>
+    </div>
+    <div v-if="searchPerformed && results.length > 0" class="mb-3 d-flex align-items-center">
+      <label for="resultsLimit" class="form-label me-2">Number of results:</label>
+      <select id="resultsLimit" class="form-select w-auto" v-model="resultsLimit" @change="searchRecipes">
         <option value="5">5</option>
         <option value="10">10</option>
         <option value="15">15</option>
       </select>
     </div>
-    <div class="search-results">
-      <div v-if="results.length === 0">No results found.</div>
-      <div v-for="recipe in results" :key="recipe.id" class="recipe-preview">
-        <img v-if="recipe.image" :src="recipe.image" :alt="recipe.title" class="recipe-image">
-        <h2>{{ recipe.title }}</h2>
-        <p><strong>Ready in:</strong> {{ recipe.readyInMinutes }} minutes</p>
-        <p><strong>Likes:</strong> {{ recipe.aggregateLikes }}</p>
-        <p v-html="recipe.summary"></p>
+    <div v-if="searchPerformed && results.length > 0" class="mb-3 d-flex align-items-center">
+      <label for="sortOrder" class="form-label me-2">Sort by:</label>
+      <select id="sortOrder" class="form-select w-auto" v-model="sortOrder" @change="sortResults">
+        <option value="none">No Sorting</option>
+        <option value="time">Preparation Time</option>
+        <option value="likes">Likes</option>
+      </select>
+    </div>
+    <div v-if="results.length === 0 && searchPerformed" class="alert alert-warning w-100 text-center">No results found.</div>
+    <div v-else-if="!searchPerformed" class="alert alert-info w-100 text-center">Please enter a search query to find recipes.</div>
+    <div class="search-results d-flex flex-wrap justify-content-center">
+      <RecipePreview 
+        v-for="recipe in sortedResults" 
+        :key="recipe.id" 
+        :recipe="recipe"
+        @update-recipe="updateRecipe"
+        @toggle-favorite="toggleFavorite"
+      />
+    </div>
+    <div v-if="lastSearchResults.length > 0" class="last-search-results mt-4">
+      <h2 class="mb-4">Last Search Results</h2>
+      <div class="d-flex flex-wrap justify-content-center">
+        <RecipePreview 
+          v-for="recipe in lastSearchResults" 
+          :key="recipe.id" 
+          :recipe="recipe"
+          @update-recipe="updateRecipe"
+          @toggle-favorite="toggleFavorite"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mockSearchRecipes } from "../services/recipes.js";
+import RecipePreview from '@/components/RecipePreview.vue';
+
 export default {
+  name: 'SearchPage',
+  components: {
+    RecipePreview
+  },
   data() {
     return {
-      query: '',
+      searchQuery: '',
       results: [],
+      lastSearchResults: [],
       resultsLimit: 5,
-      allResults: [] // To store all recipes from JSON data
+      sortOrder: 'none',
+      searchPerformed: false
     };
   },
-  mounted() {
-    // Load recipes from JSON data on component mount
-    this.loadRecipes();
+  created() {
     this.loadLastSearch();
   },
   methods: {
-    async loadRecipes() {
-      try {
-        // Fetch recipe data from JSON files
-        let response1 = await fetch('recipe_full_view.json');
-        let response2 = await fetch('recipe_preview.json');
-
-        let data1 = await response1.json();
-        let data2 = await response2.json();
-
-        // Combine data from both JSON files
-        this.allResults = data1.concat(data2);
-
-        // Initially display all recipes
-        this.results = this.allResults.slice(0, this.resultsLimit);
-      } catch (error) {
-        console.error('Error loading recipes:', error);
-      }
-    },
     searchRecipes() {
-      if (this.query.length > 0) {
-        // Filter recipes based on search query
-        this.results = this.allResults
-          .filter(recipe => recipe.title.toLowerCase().includes(this.query.toLowerCase()))
-          .slice(0, this.resultsLimit);
-
+      this.searchPerformed = true;
+      this.sortOrder = 'none'; // Reset sort order to default
+      if (this.searchQuery.length > 0) {
+        const response = mockSearchRecipes(this.searchQuery, this.resultsLimit);
+        this.results = response.data.recipes;
+        this.lastSearchResults = this.results;
         this.saveLastSearch();
       } else {
         this.results = [];
       }
     },
+    sortResults() {
+      this.saveLastSearch();
+    },
+    updateRecipe(updatedRecipe) {
+      const index = this.results.findIndex(recipe => recipe.id === updatedRecipe.id);
+      if (index !== -1) {
+        this.results.splice(index, 1, updatedRecipe);
+      }
+      const lastIndex = this.lastSearchResults.findIndex(recipe => recipe.id === updatedRecipe.id);
+      if (lastIndex !== -1) {
+        this.lastSearchResults.splice(lastIndex, 1, updatedRecipe);
+      }
+    },
+    toggleFavorite(recipeId) {
+      // Implement the logic for toggling favorite status
+      console.log(`Toggle favorite for recipe ID: ${recipeId}`);
+    },
     saveLastSearch() {
-      // Save search query and results limit to localStorage
-      localStorage.setItem('lastSearchQuery', this.query);
+      localStorage.setItem('lastSearchResults', JSON.stringify(this.lastSearchResults));
       localStorage.setItem('lastResultsLimit', this.resultsLimit);
+      localStorage.setItem('sortOrder', this.sortOrder);
     },
     loadLastSearch() {
-      // Load previous search query and results limit from localStorage
-      const lastSearchQuery = localStorage.getItem('lastSearchQuery');
+      const lastSearchResults = localStorage.getItem('lastSearchResults');
       const lastResultsLimit = localStorage.getItem('lastResultsLimit');
+      const sortOrder = localStorage.getItem('sortOrder');
 
-      if (lastSearchQuery) {
-        this.query = lastSearchQuery;
+      if (lastSearchResults) {
+        this.lastSearchResults = JSON.parse(lastSearchResults);
       }
 
       if (lastResultsLimit) {
         this.resultsLimit = parseInt(lastResultsLimit, 10);
       }
 
-      // Perform search with loaded query
-      this.searchRecipes();
+      if (sortOrder) {
+        this.sortOrder = sortOrder;
+      }
+    }
+  },
+  computed: {
+    sortedResults() {
+      if (this.sortOrder === 'time') {
+        return [...this.results].sort((a, b) => a.readyInMinutes - b.readyInMinutes);
+      } else if (this.sortOrder === 'likes') {
+        return [...this.results].sort((a, b) => b.aggregateLikes - a.aggregateLikes);
+      }
+      return this.results;
     }
   }
 };
 </script>
 
 <style scoped>
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-}
-
-.search-bar {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
-}
-
-input {
-  padding: 10px;
-  margin-bottom: 10px;
-  width: 100%;
-  max-width: 400px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
 .search-results {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.last-search-results {
   width: 100%;
-  max-width: 400px;
 }
 
-.recipe-preview {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-bottom: 10px;
+.alert-info, .alert-warning {
+  width: 100%;
+  text-align: center;
 }
 
-.recipe-image {
-  max-width: 100%;
-  border-radius: 8px;
-  margin-bottom: 10px;
+.mb-3.d-flex {
+  display: flex;
+  align-items: center;
 }
 
-.title {
-  font-size: 24px;
-  margin-bottom: 20px;
+.me-2 {
+  margin-right: 0.5rem;
+}
+
+.w-auto {
+  width: auto;
 }
 </style>

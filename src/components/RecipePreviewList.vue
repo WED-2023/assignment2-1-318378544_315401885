@@ -1,13 +1,11 @@
 <template>
   <b-container>
-    <h3>
-      {{ title }}:
-      <slot></slot>
+    <h3 class="text-center mb-4">
+      {{ title }}
     </h3>
-    <b-row>
-      <b-col v-for="r in recipes" :key="r.id" cols="auto">
+    <b-row class="justify-content-center">
+      <b-col v-for="r in recipes" :key="r.id" cols="12" md="6" class="d-flex justify-content-center mb-3">
         <RecipePreview
-          class="recipePreview"
           :recipe="r"
           @update-recipe="updateRecipe"
           @toggle-favorite="toggleFavorite"
@@ -19,7 +17,6 @@
 
 <script>
 import RecipePreview from "./RecipePreview.vue";
-import { mockGetRecipesPreview } from "../services/recipes.js";
 
 export default {
   name: "RecipePreviewList",
@@ -30,35 +27,13 @@ export default {
     title: {
       type: String,
       required: true
+    },
+    recipes: {
+      type: Array,
+      required: true
     }
   },
-  data() {
-    return {
-      recipes: []
-    };
-  },
-  mounted() {
-    this.updateRecipes();
-  },
   methods: {
-    async updateRecipes() {
-      try {
-         // const response = await this.axios.get(
-        //   this.$root.store.server_domain + "/recipes/random",
-        // );
-
-        const amountToFetch = 3;
-        const response = mockGetRecipesPreview(amountToFetch);
-
-        console.log(response);
-        const recipes = response.data.recipes;
-        console.log(recipes);
-        this.recipes = [];
-        this.recipes.push(...recipes);
-      } catch (error) {
-        console.log(error);
-      }
-    },
     updateRecipe(updatedRecipe) {
       const index = this.recipes.findIndex(recipe => recipe.id === updatedRecipe.id);
       if (index !== -1) {
@@ -81,13 +56,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.container {
-  min-height: 400px;
-}
-.recipe-preview-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+<style scoped>
+.recipe-preview {
+  margin: 10px;
 }
 </style>
