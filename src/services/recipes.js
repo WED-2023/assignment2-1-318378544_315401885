@@ -1,5 +1,6 @@
 import recipe_previews from "../assets/mocks/recipe_preview.json";
 import recipe_full_view from "../assets/mocks/recipe_full_view.json";
+import familyRecipes from "../assets/mocks/familyRecipes.json";
 
 
 export function mockGetRecipesPreview(amount = 1) {
@@ -36,4 +37,19 @@ export function mockSearchRecipes(query, amount = 1) {
   );
   const limitedAmount = Math.min(amount, filteredResults.length);
   return { data: { recipes: filteredResults.slice(0, limitedAmount) } };
+}
+export async function fetchFamilyRecipes() {
+  return new Promise((resolve) => {
+    resolve(familyRecipes);
+  });
+}
+export function addFavorite(recipe) {
+  let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+  if (!favorites.some(fav => fav.id === recipe.id)) {
+    favorites.push(recipe);
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+  }
+}
+export function getFavorites() {
+  return JSON.parse(localStorage.getItem('favorites')) || [];
 }

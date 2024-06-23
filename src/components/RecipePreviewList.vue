@@ -8,7 +8,6 @@
         <RecipePreview
           :recipe="r"
           @update-recipe="updateRecipe"
-          @toggle-favorite="toggleFavorite"
         />
       </b-col>
     </b-row>
@@ -40,18 +39,6 @@ export default {
         this.$set(this.recipes, index, updatedRecipe);
       }
     },
-    toggleFavorite(recipeId) {
-      const index = this.recipes.findIndex(recipe => recipe.id === recipeId);
-      if (index !== -1) {
-        const isFavorite = this.$root.store.favorites.includes(recipeId);
-        if (isFavorite) {
-          this.$root.store.favorites = this.$root.store.favorites.filter(id => id !== recipeId);
-        } else {
-          this.$root.store.favorites.push(recipeId);
-        }
-        this.$set(this.recipes[index], 'isFavorite', !isFavorite);
-      }
-    }
   }
 };
 </script>

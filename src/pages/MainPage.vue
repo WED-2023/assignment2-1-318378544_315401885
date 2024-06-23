@@ -2,12 +2,12 @@
   <div class="container text-center">
     <h1 class="title my-4">Main Page</h1>
     <div class="row">
-      <div class="col-md-6 mb-4">
-        <RecipePreviewList :recipes="randomRecipes" title="Explore these recipes" />
-        <button @click="getRandomRecipes" class="btn btn-primary mt-3">Refresh Recipes</button>
+      <div class="col-md-6 mb-4 d-flex flex-column align-items-center">
+        <RecipePreviewList :recipes="randomRecipes" title="Explore these recipes:" />
+        <button @click="getRandomRecipes" class="btn btn-primary mt-3 refresh-button">Refresh Recipes</button>
       </div>
       <div class="col-md-6 mb-4 d-flex flex-column align-items-center justify-content-start">
-        <div class="mt-5">
+        <div class="mt-0 w-100">
           <div v-if="!$root.store.username">
             <form @submit.prevent="login" class="login-form text-center">
               <div class="form-group">
@@ -27,7 +27,7 @@
           <div v-else>
             <RecipePreviewList
               :recipes="lastWatchedRecipes"
-              title="Last watched recipes"
+              title="Last watched recipes:"
             />
           </div>
         </div>
@@ -122,17 +122,20 @@ export default {
 }
 
 .refresh-button {
-  display: block;
-  margin: 10px auto;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  margin-top: 20px;
 }
 
 .refresh-button:hover {
   background-color: #0056b3;
+}
+
+.row {
+  align-items: flex-start;
+}
+
+.col-md-6 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 </style>

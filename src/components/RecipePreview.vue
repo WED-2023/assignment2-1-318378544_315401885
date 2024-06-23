@@ -60,7 +60,7 @@
 
 
 <script>
-import axios from 'axios';
+import { addFavorite, getFavorites } from "../services/recipes.js";
 
 export default {
   props: {
@@ -107,7 +107,7 @@ export default {
     //});
 
     this.image_load = true; // סימולציה של טעינת התמונה
-    this.isFavorite = this.$root.store.favorites.includes(this.recipe.id);
+    this.checkFavorite();
   },
   methods: {
     markAsViewed() {
@@ -116,8 +116,12 @@ export default {
       console.log(recipe.viewed)
     },
     toggleFavorite() {
-      this.isFavorite = !this.isFavorite;
-      this.$emit('toggle-favorite', this.recipe.id); // שליחת עדכון למועדפים
+      addFavorite(this.recipe);
+      this.isFavorite = true;
+    },
+    checkFavorite() {
+      const favorites = getFavorites();
+      this.isFavorite = favorites.some(fav => fav.id === this.recipe.id);
     }
   }
 };

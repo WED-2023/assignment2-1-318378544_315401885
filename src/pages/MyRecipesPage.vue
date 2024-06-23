@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>My Recipes</h1>
+    <h1 class="page-title">My Recipes</h1>
     <NewRecipePreview />
   </div>
 </template>
@@ -17,7 +17,13 @@ export default {
 </script>
 
 <style scoped>
-/* הוסף כאן סגנונות מותאמים אישית לדף שלך */
+.page-title {
+  text-align: center;
+  font-size: 2.5em;
+  margin-top: 20px;
+  font-weight: 700;
+  font-family: 'Roboto', sans-serif;
+}
 </style>
 
 
