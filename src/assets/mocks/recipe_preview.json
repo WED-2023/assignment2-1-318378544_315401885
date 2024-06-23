@@ -1,69 +1,69 @@
 [
-    {
-      "id": 716432,
-      "image": "https://www.allrecipes.com/thmb/XKubY0z2cSv0c0LTGJISzoJyoZI=/0x512/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/AR-21398-banana-pudding-ddmfs-4x3-beauty-e33f07af31724ccb9b3912f58eb84ab7.jpg",
-      "title": "Banana Pudding",
-      "readyInMinutes": 70,
-      "aggregateLikes": 80,
-      "vegetarian": true,
-      "vegan": false,
-      "glutenFree": false,
-      "summary": "A banana pudding with cream cheese, condensed milk, and vanilla wafers that's quick and easy to make. Enjoy!"
-    },
-    {
-      "id": 716433,
-      "image": "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F43%2F2022%2F03%2F31%2F11679-homemade-mac-and-cheese-chef-mo-3x2-1.jpg&q=60&c=sc&poi=auto&orient=true&h=512",
-      "title": "Homemade Mac and Cheese",
-      "readyInMinutes": 20,
-      "aggregateLikes": 200,
-      "vegetarian": true,
-      "vegan": false,
-      "glutenFree": false,
-      "summary": "This mac and cheese recipe with a buttered bread crumb topping is creamy and comforting. It's easy to make the cheese sauce from scratch on your stovetop, starting with a roux and adding milk, Cheddar, and Parmesan, resulting in a rich, decadent sauce that coats every nook and cranny of the noodles."
-    },
-    {
-      "id": 716434,
-      "image": "https://www.allrecipes.com/thmb/fCEfdizjzlWRGPKH5RPeehUSakU=/0x512/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/8650250_Roast-Beef-and-Cheddar-Sliders_Dotdash-Meredith-Food-Studios_4x3-3e2bc4bca7c54420877f936dc64dbdd4.jpg",
-      "title": "Roast Beef and Cheddar Sliders",
-      "readyInMinutes": 85,
-      "aggregateLikes": 150,
-      "vegetarian": true,
-      "vegan": false,
-      "glutenFree": false,
-      "summary": "These roast beef and Cheddar sliders are so easy to put together, bake in just a few minutes, and are just as delicious as the fast-food favorite from your favorite roast beef restaurant. And you don't have to leave home."
-    },
-    {
-      "id": 716429,
-      "image": "https://img.spoonacular.com/recipes/716429-556x370.jpg",
-      "title": "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs",
-      "readyInMinutes": 45,
-      "aggregateLikes": 209,
-      "vegetarian": false,
-      "vegan": false,
-      "glutenFree": true,
-      "summary": "You can never have too many main course recipes, so give Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs a try. One serving contains <b>543 calories</b>, <b>17g of protein</b>, and <b>16g of fat</b>. For <b>$1.57 per serving</b>, this recipe <b>covers 22%</b> of your daily requirements of vitamins and minerals. This recipe serves 2. A mixture of butter, white wine, pasta, and a handful of other ingredients are all it takes to make this recipe so yummy. 209 people have tried and liked this recipe. It is brought to you by fullbellysisters.blogspot.com. From preparation to the plate, this recipe takes approximately <b>45 minutes</b>. Taking all factors into account, this recipe <b>earns a spoonacular score of 83%</b>, which is tremendous. If you like this recipe, take a look at these similar recipes: <a href=\"https://spoonacular.com/recipes/pasta-with-garlic-scallions-cauliflower-breadcrumbs-1230187\">Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs</a>, <a href=\"https://spoonacular.com/recipes/pasta-with-garlic-scallions-cauliflower-breadcrumbs-1229807\">Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs</a>, and <a href=\"https://spoonacular.com/recipes/pasta-with-garlic-scallions-cauliflower-breadcrumbs-1229669\">Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs</a>."
-    },
-    {
-      "id": 716430,
-      "image": "https://www.allrecipes.com/thmb/ixtJjxqjwI-NR9s_eO5v7vO-vzE=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/970837-376e87fe0b594d9ea7993ef61a503791.jpg",
-      "title": "Easy Asian Pasta Salad",
-      "readyInMinutes": 60,
-      "aggregateLikes": 109,
-      "vegetarian": true,
-      "vegan": false,
-      "glutenFree": true,
-      "summary": "Cool pasta salad on a hot summer day is the perfect BBQ side dish. It is always one of the first things to go."
-    },
-    {
-      "id": 716431,
-      "image": "https://www.allrecipes.com/thmb/sXvCPNr6s0jYrtgFX4RgjvQyZRY=/0x512/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/70208_AmeliasTunaMacaroniSalad_ddmfs_4x3_2351-3ed4fab787fe497a8464674df8a592ad.jpg",
-      "title": "Tuna Macaroni Salad",
-      "readyInMinutes": 40,
-      "aggregateLikes": 300,
-      "vegetarian": true,
-      "vegan": false,
-      "glutenFree": false,
-      "summary": "This tuna macaroni salad is easy to make with cooked pasta, celery, peas, relish, and mayonnaise. It will remind you of Grandma's! Enjoy this basic comfort food when the weather is warm."
-    }
-  ]
+  {
+    "id": 716432,
+    "image": "https://www.allrecipes.com/thmb/XKubY0z2cSv0c0LTGJISzoJyoZI=/0x512/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/AR-21398-banana-pudding-ddmfs-4x3-beauty-e33f07af31724ccb9b3912f58eb84ab7.jpg",
+    "title": "Banana Pudding",
+    "readyInMinutes": 70,
+    "aggregateLikes": 80,
+    "vegetarian": true,
+    "vegan": false,
+    "glutenFree": false,
+    "summary": "A banana pudding with cream cheese, condensed milk, and vanilla wafers that's quick and easy to make. Enjoy!"
+  },
+  {
+    "id": 716433,
+    "image": "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F43%2F2022%2F03%2F31%2F11679-homemade-mac-and-cheese-chef-mo-3x2-1.jpg&q=60&c=sc&poi=auto&orient=true&h=512",
+    "title": "Homemade Mac and Cheese",
+    "readyInMinutes": 20,
+    "aggregateLikes": 200,
+    "vegetarian": true,
+    "vegan": false,
+    "glutenFree": false,
+    "summary": "This mac and cheese recipe with a buttered bread crumb topping is creamy and comforting. It's easy to make the cheese sauce from scratch on your stovetop, starting with a roux and adding milk, Cheddar, and Parmesan, resulting in a rich, decadent sauce that coats every nook and cranny of the noodles."
+  },
+  {
+    "id": 716434,
+    "image": "https://www.allrecipes.com/thmb/fCEfdizjzlWRGPKH5RPeehUSakU=/0x512/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/8650250_Roast-Beef-and-Cheddar-Sliders_Dotdash-Meredith-Food-Studios_4x3-3e2bc4bca7c54420877f936dc64dbdd4.jpg",
+    "title": "Roast Beef and Cheddar Sliders",
+    "readyInMinutes": 85,
+    "aggregateLikes": 150,
+    "vegetarian": true,
+    "vegan": false,
+    "glutenFree": false,
+    "summary": "These roast beef and Cheddar sliders are so easy to put together, bake in just a few minutes, and are just as delicious as the fast-food favorite from your favorite roast beef restaurant. And you don't have to leave home."
+  },
+  {
+    "id": 716429,
+    "image": "https://img.spoonacular.com/recipes/716429-556x370.jpg",
+    "title": "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs",
+    "readyInMinutes": 45,
+    "aggregateLikes": 209,
+    "vegetarian": false,
+    "vegan": false,
+    "glutenFree": true,
+    "summary": "You can never have too many main course recipes, so give Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs a try. One serving contains <b>543 calories</b>, <b>17g of protein</b>, and <b>16g of fat</b>. For <b>$1.57 per serving</b>, this recipe <b>covers 22%</b> of your daily requirements of vitamins and minerals. This recipe serves 2. A mixture of butter, white wine, pasta, and a handful of other ingredients are all it takes to make this recipe so yummy. 209 people have tried and liked this recipe. It is brought to you by fullbellysisters.blogspot.com. From preparation to the plate, this recipe takes approximately <b>45 minutes</b>. Taking all factors into account, this recipe <b>earns a spoonacular score of 83%</b>, which is tremendous. If you like this recipe, take a look at these similar recipes: <a href=\"https://spoonacular.com/recipes/pasta-with-garlic-scallions-cauliflower-breadcrumbs-1230187\">Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs</a>, <a href=\"https://spoonacular.com/recipes/pasta-with-garlic-scallions-cauliflower-breadcrumbs-1229807\">Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs</a>, and <a href=\"https://spoonacular.com/recipes/pasta-with-garlic-scallions-cauliflower-breadcrumbs-1229669\">Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs</a>."
+  },
+  {
+    "id": 716430,
+    "image": "https://www.allrecipes.com/thmb/ixtJjxqjwI-NR9s_eO5v7vO-vzE=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/970837-376e87fe0b594d9ea7993ef61a503791.jpg",
+    "title": "Easy Asian Pasta Salad",
+    "readyInMinutes": 60,
+    "aggregateLikes": 109,
+    "vegetarian": true,
+    "vegan": false,
+    "glutenFree": true,
+    "summary": "Cool pasta salad on a hot summer day is the perfect BBQ side dish. It is always one of the first things to go."
+  },
+  {
+    "id": 716431,
+    "image": "https://www.allrecipes.com/thmb/sXvCPNr6s0jYrtgFX4RgjvQyZRY=/0x512/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/70208_AmeliasTunaMacaroniSalad_ddmfs_4x3_2351-3ed4fab787fe497a8464674df8a592ad.jpg",
+    "title": "Tuna Macaroni Salad",
+    "readyInMinutes": 40,
+    "aggregateLikes": 300,
+    "vegetarian": true,
+    "vegan": false,
+    "glutenFree": false,
+    "summary": "This tuna macaroni salad is easy to make with cooked pasta, celery, peas, relish, and mayonnaise. It will remind you of Grandma's! Enjoy this basic comfort food when the weather is warm."
+  }
+]
   
