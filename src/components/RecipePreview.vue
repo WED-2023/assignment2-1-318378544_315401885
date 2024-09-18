@@ -1,9 +1,8 @@
-
 <template>
   <div :class="['recipe-preview', { viewed: recipe.viewed }]">
     <div class="recipe-body">
       <router-link
-        :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
+        :to="getRecipeLink"
         @click.native="markAsViewed"
       >
         <div class="image-container">
@@ -48,7 +47,7 @@
       </div>
       <div class="icon-container">
         <button @click="toggleFavorite" class="favorite-btn">
-          <span v-if="isFavorite" class="favorite-icon" :style="{ fontSize: favoriteIconSize + 'px' }">&#9733;</span>
+          <span v-if="finalIsFavorite" class="favorite-icon" :style="{ fontSize: favoriteIconSize + 'px' }">&#9733;</span>
           <span v-else class="favorite-icon" :style="{ fontSize: favoriteIconSize + 'px' }">&#9734;</span>
         </button>
         <span class="view-icon" :class="{ filled: recipe.viewed }">&#128065;</span>
@@ -57,109 +56,137 @@
   </div>
 </template>
 
-
-
 <script>
-import { addFavorite, getFavorites } from "../services/recipes.js";
+import { addFavorite, getFavorites } from "../services/user.js";
 
 export default {
   props: {
     recipe: {
       type: Object,
       required: true
+    },
+    isFavorite: {
+      type: Boolean, 
+      default: null
     }
-
-    // id: {
-    //   type: Number,
-    //   required: true
-    // },
-    // title: {
-    //   type: String,
-    //   required: true
-    // },
-    // readyInMinutes: {
-    //   type: Number,
-    //   required: true
-    // },
-    // image: {
-    //   type: String,
-    //   required: true
-    // },
-    // aggregateLikes: {
-    //   type: Number,
-    //   required: false,
-    //   default() {
-    //     return undefined;
-    //   }
-    // }
-    
   },
   data() {
     return {
-      //image_load: false,
-      isFavorite: false,
-      favoriteIconSize: 35, // הוספת משתנה לגודל הכוכב
+      localIsFavorite: false,
+      favoriteIconSize: 35,
+      imageLoading: true
     };
   },
-  mounted() {
-    //this.axios.get(this.recipe.image).then((i) => {
-    // this.image_load = true;
-    //});
+  computed: {
+    getRecipeLink() {
+      const routeName = this.$route.name;
 
-    this.image_load = true; // סימולציה של טעינת התמונה
-    this.checkFavorite();
+      if ((routeName === 'favorites' || routeName === 'main') && this.recipe.recipe_id) {
+        return { name: 'favorite-recipe', params: { recipeId: this.recipe.recipe_id } };
+      }
+      else if ((routeName === 'main' || routeName === 'search') && this.recipe.id) {
+        return { name: 'recipe', params: { recipeId: this.recipe.id } };
+      }
+      else if (routeName === 'myrecipes' || routeName === 'user-recipe') {
+        return { name: 'user-recipe', params: { recipeId: this.recipe.id } };
+      }
+      else {
+        return { name: 'recipe', params: { recipeId: this.recipe.id } };
+      }
+    },
+    finalIsFavorite() {
+      return this.isFavorite !== null ? this.isFavorite : this.localIsFavorite;
+    }
+  },
+  async mounted() {
+    this.image_load = true; 
+    if (this.isFavorite === null) { 
+      await this.checkFavorite();
+    }
   },
   methods: {
     markAsViewed() {
       this.recipe.viewed = true;
-      this.$emit('update-recipe', this.recipe); // שליחת עדכון למתכון שנצפה
-      console.log(recipe.viewed)
+      this.$emit('update-recipe', this.recipe);
     },
-    toggleFavorite() {
-      addFavorite(this.recipe);
-      this.isFavorite = true;
+    async toggleFavorite() {
+      if (!this.$root.store.username) {
+      alert("You need to be logged in to add recipes to favorites."); // הצגת הודעה
+      return;
+      }
+      if (this.localIsFavorite) {
+        alert("This recipe is already in your favorites."); 
+        return;
+      }
+      try {
+        await addFavorite(this.recipe); 
+        this.localIsFavorite = true;
+
+        this.$emit('update-recipe', { ...this.recipe, isFavorite: true });
+
+      } catch (error) {
+        console.error("Error adding favorite:", error);
+      }
     },
-    checkFavorite() {
-      const favorites = getFavorites();
-      this.isFavorite = favorites.some(fav => fav.id === this.recipe.id);
+    async checkFavorite() {
+      const userId = localStorage.getItem('userId'); 
+      if (!userId) {
+        this.localIsFavorite = false;
+        return;
+      }
+      try {
+        const favorites = await getFavorites(); 
+        this.localIsFavorite = favorites.some(fav => fav.id === this.recipe.id);
+      } catch (error) {
+        console.error("Error checking favorites:", error);
+      }
     }
   }
 };
 </script>
 
+
+
 <style scoped>
 .recipe-preview {
   display: flex;
   flex-direction: column;
-  width: 300px; /* גודל קבוע לכל הקופסאות */
-  height: 450px; /* גובה מוגדל */
+  width: 300px; 
+  height: 450px; 
   margin: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   overflow: hidden;
   position: relative;
-  background-color: white; /* צבע רקע רגיל */
-  transition: background-color 0.3s ease; /* הוספת מעבר חלק */
-  text-decoration: none; /* לבטל קו תחתון על הבלוק */
-  color: inherit; /* לשמור על הצבע הנוכחי */
+  background-color: white; 
+  transition: background-color 0.3s ease;
+  text-decoration: none; 
+  color: inherit; 
 }
 
 .recipe-preview > .recipe-body {
   width: 100%;
-  height: 200px; /* גובה קבוע לתמונה */
+  height: 200px; 
   position: relative;
 }
 .recipe-preview .recipe-body .image-container {
   position: relative;
   width: 100%;
   height: 100%;
-  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.recipe-preview .recipe-body .spinner-border {
+  width: 3rem;
+  height: 3rem;
 }
 .recipe-preview .recipe-body .recipe-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  cursor: pointer; /* סימון שהתמונה לחיצה */
+  cursor: pointer; 
 }
 .recipe-preview .recipe-body .overlay {
   position: absolute;
@@ -192,17 +219,16 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center; /* יישור הטקסט */
+  text-align: center; 
 }
 .recipe-preview .recipe-footer .recipe-title {
   font-size: 14pt;
   font-weight: bold;
   margin-bottom: 5px;
-  max-height: 3em; /* גובה מקסימלי */
+  max-height: 3em; 
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 2; /* הגבלת מספר השורות */
   -webkit-box-orient: vertical;
 }
 .recipe-preview .recipe-footer .recipe-time {
@@ -211,7 +237,7 @@ export default {
 }
 .recipe-preview .recipe-footer ul.recipe-overview {
   display: flex;
-  flex-direction: column; /* שינוי לעמודה כדי שהמאפיינים יוצגו אחד אחרי השני */
+  flex-direction: column; 
   padding: 0;
   margin: 0;
   list-style: none;
@@ -235,7 +261,7 @@ export default {
 }
 .check-mark {
   font-size: 14px;
-  color: #4caf50; /* צבע ירוק לסימן וי */
+  color: #4caf50; 
 }
 .likes {
   font-size: 12pt;
@@ -245,23 +271,23 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: auto; /* כדי לוודא שזה נמצא בתחתית */
+  margin-top: auto; 
 }
 .favorite-btn {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 35px; /* שינוי גודל הכוכב */
+  font-size: 35px; 
 }
 .favorite-icon {
-  color: #ffcc00; /* צבע כוכב */
+  color: #ffcc00; 
 }
 .view-icon {
-  font-size: 35px; /* גודל אייקון העין */
-  color: #888; /* צבע העין במצב רגיל */
+  font-size: 35px; 
+  color: #888; 
 }
 .view-icon.filled {
-  color: #b1ecb3; /* צבע העין במצב נצפה */
+  color: #b1ecb3; 
 }
 </style>
 

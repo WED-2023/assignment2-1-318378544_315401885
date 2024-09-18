@@ -28,6 +28,16 @@ const routes = [
     component: () => import("./pages/RecipeViewPage"),
   },
   {
+    path: "/user-recipe/:recipeId",
+    name: "user-recipe",
+    component: () => import("./pages/RecipeViewPage.vue"), 
+  },
+  {
+    path: '/favorite-recipe/:recipeId',
+    name: 'favorite-recipe',
+    component: () => import("./pages/RecipeViewPage.vue"),
+  },   
+  {
     path: "*",
     name: "notFound",
     component: NotFound,
@@ -36,11 +46,6 @@ const routes = [
     path: '/about',
     name: 'about',
     component: () => import('./pages/AboutPage.vue'),
-  },
-  {
-    path: '/addrecipe',
-    name: 'addrecipe',
-    component: () => import('./pages/AddNewRecipe.vue'),
   },
   {
     path: '/favorites',

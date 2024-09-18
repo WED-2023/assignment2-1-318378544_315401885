@@ -38,7 +38,11 @@
     </b-modal>
   </template>
   
+  
   <script>
+
+  import { addNewRecipe } from '../services/recipes.js';
+  
   export default {
     props: ['show'],
     data() {
@@ -57,8 +61,8 @@
           extendedIngredients: [],
           instructions: []
         },
-        ingredientsInput: "", // משתנה טקסט קלט למוצרים
-        instructionsInput: "" // משתנה טקסט קלט להוראות
+        ingredientsInput: "",
+        instructionsInput: "" 
       };
     },
     watch: {
@@ -71,12 +75,11 @@
         }
       }
     },
-    methods: {
-      submitRecipe() {
-      // עיבוד נתוני המוצרים וההוראות
+  methods: {
+    async submitRecipe() {
       this.newRecipe.extendedIngredients = this.ingredientsInput.split('\n').map((ingredient, index) => ({
         id: index,
-        original: ingredient
+        original: ingredient.trim()
       }));
 
       this.newRecipe.analyzedInstructions = [
@@ -84,21 +87,23 @@
           name: "Instructions",
           steps: this.instructionsInput.split('\n').map((step, index) => ({
             number: index + 1,
-            step: step
+            step: step.trim()
           }))
         }
       ];
 
-      console.log("New Recipe Data:", this.newRecipe); // הוספת הדפסת קונסול
-        let recipes = JSON.parse(localStorage.getItem('recipes') || '[]');
-        recipes.push(this.newRecipe);
-        localStorage.setItem('recipes', JSON.stringify(recipes));
+      this.newRecipe.userId = localStorage.getItem('userId');
+
+      try {
+        await addNewRecipe(this.newRecipe);
         this.showModal = false;
         this.$emit('recipeCreated', this.newRecipe);
         this.$emit('close');
-
+      } catch (error) {
+        console.error("Error submitting new recipe:", error);
       }
     }
+  }
   };
   </script>
   

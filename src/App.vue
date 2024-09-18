@@ -21,7 +21,7 @@
           <button class="nav-link">Personal</button>
           <div v-if="dropdownOpen" class="dropdown-content">
             <router-link :to="{ name: 'favorites' }" class="dropdown-link">My Favorite Recipes</router-link>
-            <router-link :to="{ name: 'familyrecipes' }" class="dropdown-link">My Family Recipes</router-link>
+            <router-link :to="{ name: 'familyrecipes' }" class="dropdown-link">Friends Recipes</router-link>
             <router-link :to="{ name: 'myrecipes' }" class="dropdown-link">My Recipes</router-link>
           </div>
         </div>
@@ -59,21 +59,27 @@ export default {
     closeDropdown() {
       this.dropdownOpen = false;
     },
+    clearLastSearch() {
+      sessionStorage.removeItem('lastSearchResults');
+      sessionStorage.removeItem('lastResultsLimit');
+      sessionStorage.removeItem('sortOrder');
+    },
     Logout() {
-      this.$root.store.logout();
-      this.$root.toast("Logout", "User logged out successfully", "success");
+      this.clearLastSearch();
+      this.$root.store.logout(); 
       this.dropdownOpen = false;
+      localStorage.removeItem('userId');
       this.$router.push("/").catch(() => {
         this.$forceUpdate();
       });
-    },
-    fetchRecipes() {
-      // פונקציה לעדכון רשימת המתכונים לאחר יצירת מתכון חדש
-      this.$root.store.fetchRecipes();
-    }
-  }
-  
-};
+      location.reload(); 
+      },
+        fetchRecipes() {
+          this.$root.store.fetchRecipes();
+        }
+      }
+      
+    };
 </script>
 
 <style lang="scss">
@@ -128,7 +134,6 @@ export default {
 
 .router-link-active, .router-link-exact-active {
   background-color: #cd5c5c; 
-  //border-bottom: 2px solid #ff9933; 
   font-weight: bold;
   color: #fff;
   text-decoration: none;

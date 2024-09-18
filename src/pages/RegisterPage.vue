@@ -167,10 +167,7 @@
     <b-alert class="mt-2" v-if="form.submitError" variant="warning" dismissible show>
       Register failed: {{ form.submitError }}
     </b-alert>
-    <!-- <b-card class="mt-3 md-3" header="Form Data Result">
-      <pre class="m-0"><strong>form:</strong> {{ form }}</pre>
-      <pre class="m-0"><strong>$v.form:</strong> {{ $v.form }}</pre>
-    </b-card> -->
+
   </div>
 </template>
 
@@ -184,7 +181,7 @@ import {
   sameAs,
   email
 } from "vuelidate/lib/validators";
-import { mockRegister } from "../services/auth.js";
+import { register } from "../services/auth.js";
 
 const containsNumber = (value) => /[0-9]/.test(value);
 const containsSpecial = (value) => /[!@#\$%\^\&*\)\(+=._-]/.test(value);
@@ -245,9 +242,7 @@ export default {
     }
   },
   mounted() {
-    // console.log("mounted");
     this.countries.push(...countries);
-    // console.log($v);
   },
   methods: {
     validateState(param) {
@@ -257,38 +252,31 @@ export default {
     async Register() {
       try {
 
-        // const response = await this.axios.post(
-        //   // "https://test-for-3-2.herokuapp.com/user/Register",
-        //   this.$root.store.server_domain + "/Register",
-
-        //   {
-        //     username: this.form.username,
-        //     password: this.form.password
-        //   }
-        // );
-
         const userDetails = {
           username: this.form.username,
-          password: this.form.password
-        };
+          password: this.form.password,
+          confirmedPassword:this.form.confirmedPassword,
+          firstname: this.form.firstName,
+          lastname: this.form.lastName,
+          country: this.form.country,
+          email: this.form.email
+      };
 
-        const response = mockRegister(userDetails);
+        const response = await register(userDetails);
+
 
         this.$router.push("/login");
-        // console.log(response);
       } catch (err) {
-        console.log(err.response);
         this.form.submitError = err.response.data.message;
       }
     },
 
     onRegister() {
-      // console.log("register method called");
       this.$v.form.$touch();
       if (this.$v.form.$anyError) {
+        this.form.submitError = 'Please complete all required fields as requested.';
         return;
       }
-      // console.log("register method go");
       this.Register();
     },
     onReset() {

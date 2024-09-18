@@ -2,14 +2,17 @@
   <div class="favorites-page">
     <h1 class="page-title">My Favorites</h1>
     <div v-if="favorites.length === 0">
-      <p>No favorites yet.</p>
+      <h3 class = "no-favorites-container">You haven't added any recipes to your favorites yet</h3>
     </div>
-    <recipe-preview-list v-else :recipes="favorites"></recipe-preview-list>
+    <recipe-preview-list v-else 
+      :recipes="favorites"
+      :favorites="favorites">
+    </recipe-preview-list>
   </div>
 </template>
 
 <script>
-import { getFavorites } from "../services/recipes.js";
+import { getFavorites } from "../services/user.js";
 import RecipePreviewList from '@/components/RecipePreviewList.vue';
 
 export default {
@@ -22,8 +25,13 @@ export default {
     };
   },
   methods: {
-    loadFavorites() {
-      this.favorites = getFavorites();
+    async loadFavorites() {
+      try {
+        const favorites = await getFavorites();
+        this.favorites = favorites;
+      } catch (error) {
+        console.error("Error loading favorites:", error);
+      }
     }
   },
   mounted() {
@@ -43,4 +51,11 @@ export default {
   font-family: 'Roboto', sans-serif;
 }
 
+.no-favorites-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px; 
+  width: 100%;
+}
 </style>

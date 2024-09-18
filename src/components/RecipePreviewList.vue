@@ -1,7 +1,6 @@
 <template>
   <b-container>
     <h3 class="text-center mb-4">
-      {{ title }}
     </h3>
     <b-row class="justify-content-center">
       <b-col v-for="r in recipes" :key="r.id" cols="12" md="6" class="d-flex justify-content-center mb-3">
@@ -23,10 +22,6 @@ export default {
     RecipePreview
   },
   props: {
-    title: {
-      type: String,
-      required: true
-    },
     recipes: {
       type: Array,
       required: true

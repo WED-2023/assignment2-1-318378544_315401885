@@ -1,15 +1,34 @@
-// src/services/user.js
-import recipe_full_view from "../assets/mocks/recipe_full_view.json";
-import recipe_preview from "../assets/mocks/recipe_preview.json";
 
+import axios from 'axios';
 
-  export function mockAddFavorite(recipeId) {
-    return { status: 200, response: { data: { message: "The Recipe successfully saved as favorite", success: true}} };
-  }
+const API_URL = 'http://localhost:3000'; 
+
+export async function addFavorite(recipe) {
+  try {
+    const userId = localStorage.getItem('userId');
+
+    if (!userId) {
+      throw new Error("User ID not found in localStorage");
+    }
   
-  export function mockAddUserRecipe(recipeDetails) {
-    return { status: 200, response: { data: { message: "The Recipe successfully added to My Recipes", success: true}} };
+    const response = await axios.post(`${API_URL}/user/favorites`, { userId, recipe });
 
+    return response;
+  } catch (error) {
+    throw error;
   }
-  
+}
+
+export async function getFavorites() {
+  try {
+    const userId = localStorage.getItem('userId');
+    const response = await axios.get(`${API_URL}/user/favorites`, { params: { userId } });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching favorites:", error);
+    throw error;
+  }
+}
+
+
   

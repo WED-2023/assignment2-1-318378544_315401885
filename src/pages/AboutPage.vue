@@ -26,7 +26,7 @@
           <div class="developer">
             <div class="developer-image">
               <img
-                src="https://media.licdn.com/dms/image/D4D03AQFY5_qbNd174w/profile-displayphoto-shrink_800_800/0/1714631082734?e=1723075200&v=beta&t=cd4zFC7Z6AcVeOKWBf5XNtfrHYScHELpAdl_-Ia5Xtk"
+                src="https://media.licdn.com/dms/image/v2/D4D03AQFY5_qbNd174w/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1714631082734?e=1731542400&v=beta&t=oTiEGN52Lg5_LwC8ogA5fMQAaOCf5NRht0CavnVzIME"
                 alt="Yael Kanevsky"
               />
             </div>
@@ -41,7 +41,7 @@
           <div class="developer">
             <div class="developer-image">
               <img
-                src=""
+                src="https://media.licdn.com/dms/image/v2/C4D03AQH1aAqfBjtLnA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1660598585893?e=1731542400&v=beta&t=h8QkXHrY8GHVcck3OL2CSy7fTTFcd09a4HDRizbPPpI"
                 alt="Shelly"
               />
             </div>
@@ -73,14 +73,14 @@
   }
   
   .box {
-    border: 1px solid #cd5c5c; /* Indian Red */
+    border: 1px solid #cd5c5c; 
     border-radius: 8px;
     padding: 2rem;
     background: linear-gradient(
     to right,
-        rgba(205, 92, 92, 0.1), /* Indian Red */
-        rgba(205, 92, 92, 0.3), /* Indian Red */
-        rgba(205, 92, 92, 0.5)  /* Indian Red */
+        rgba(205, 92, 92, 0.1), 
+        rgba(205, 92, 92, 0.3), 
+        rgba(205, 92, 92, 0.5)  
   );
     border-radius: 10px;
     width: 70%;
@@ -118,7 +118,7 @@
     width: 100px;
     height: 100px;
     object-fit: cover;
-    border-radius: 50%; /* Add this line to make the image circular */
+    border-radius: 50%; 
   
   }
   

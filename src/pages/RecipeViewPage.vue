@@ -1,6 +1,12 @@
 <template>
   <div class="container">
-    <div v-if="recipe">
+    <div v-if="loading" class="loading-spinner">
+      <p>Loading recipe...</p>
+    </div>
+    <div v-if="error" class="error-message">
+      <p>{{ error }}</p>
+    </div>
+    <div v-if="recipe && !loading && !error">
       <div class="recipe-header mt-3 mb-4 text-center">
         <h1 class="recipe-title">{{ recipe.title }}</h1>
         <img :src="recipe.image" class="recipe-image center" />
@@ -14,23 +20,19 @@
       </div>
       <div class="recipe-body">
         <div class="wrapper">
-          <div class="wrapped ingredients">
+          <div class="wrapped ingredients" v-if="recipe.extendedIngredients && recipe.extendedIngredients.length">
             <h2>Ingredients:</h2>
             <ul>
-              <li
-                v-for="(r, index) in recipe.extendedIngredients"
-                :key="index + '_' + r.id"
-                class="ingredient-item"
-              >
-                {{ r.original }}
+              <li v-for="(ingredient, index) in recipe.extendedIngredients" :key="index + '_' + ingredient.id" class="ingredient-item">
+                {{ ingredient.original }}
               </li>
             </ul>
           </div>
-          <div class="wrapped instructions">
+          <div class="wrapped instructions" v-if="recipe.analyzedInstructions && recipe.analyzedInstructions.length">
             <h2>Instructions:</h2>
             <ol>
-              <li v-for="(instruction, index) in recipe._instructions" :key="index" class="instruction-step">
-                {{ instruction.step }}
+              <li v-for="(step, index) in recipe.analyzedInstructions[0].steps" :key="index" class="instruction-step">
+                {{ step.step }}
               </li>
             </ol>
           </div>
@@ -40,73 +42,67 @@
   </div>
 </template>
 
-
-
 <script>
-import { mockGetRecipeFullDetails } from "../services/recipes.js";
+import { getRecipeFullDetails, getUserRecipeDetails } from "../services/recipes.js";
 
 export default {
   data() {
     return {
-      recipe: null
+      recipe: null,
+      loading: true,
+      error: null
     };
   },
   async created() {
     try {
-      console.log("Recipe ID from route params:", this.$route.params.recipeId);
-      let response = mockGetRecipeFullDetails(this.$route.params.recipeId);
-      console.log("Response from mockGetRecipeFullDetails:", response);
+      this.loading = true;
+      const recipeId = this.$route.params.recipeId;
+      const source = this.$route.name === 'user-recipe' ? 'db' : 'api';
+      let response;
 
-      if (!response || !response.data || !response.data.recipe) {
-        console.error("Recipe not found, redirecting to NotFound");
-        this.$router.replace("/NotFound");
-        return;
+      if (source === 'db') {
+        response = await getUserRecipeDetails(recipeId);
+        if (response && response.recipe) {
+          response = response.recipe; 
+        }
+      } else {
+        response = await getRecipeFullDetails(recipeId);
+        if (response && response.data) {
+          response = response.data; 
+        }
       }
 
-      let {
-        analyzedInstructions =[],
-        instructions ,
-        extendedIngredients,
-        aggregateLikes,
-        readyInMinutes,
-        image,
-        title,
-        vegetarian,
-        glutenFree,
-        vegan
-      } = response.data.recipe;
-
-      let _instructions = [];
-      if (Array.isArray(analyzedInstructions)) {
-        _instructions = analyzedInstructions
-          .map((fstep) => {
-            if (fstep.steps.length > 0) {
-              return fstep.steps;
-            }
-            return [];
-          })
-          .reduce((a, b) => [...a, ...b], []);
+      if (!response) {
+        throw new Error("Recipe not found");
       }
 
-      this.recipe = {
-        instructions,
-        _instructions,
-        analyzedInstructions,
-        extendedIngredients,
-        aggregateLikes,
-        readyInMinutes,
-        image,
-        title,
-        vegetarian,
-        glutenFree,
-        vegan
+      const processedRecipe = {
+        id: response.id,
+        title: response.title,
+        image: response.image,
+        readyInMinutes: response.readyInMinutes,
+        aggregateLikes: response.aggregateLikes || 0,
+        vegan: response.vegan === 1 || response.vegan === true,
+        vegetarian: response.vegetarian === 1 || response.vegetarian === true,
+        glutenFree: response.glutenFree === 1 || response.glutenFree === true,
+        extendedIngredients: Array.isArray(response.extendedIngredients)
+          ? response.extendedIngredients
+          : JSON.parse(response.extendedIngredients || '[]'),
+        analyzedInstructions: Array.isArray(response.analyzedInstructions)
+          ? response.analyzedInstructions
+          : JSON.parse(response.analyzedInstructions || '[]'),
+        sourceName: response.sourceName || null,
+        sourceUrl: response.sourceUrl || null,
       };
-      
-      //this.recipe = _recipe;
-      console.log("Recipe loaded:", this.recipe);
+
+      this.recipe = processedRecipe;
+
     } catch (error) {
+      this.error = error.message || "Failed to load the recipe.";
       console.error("Error in created hook:", error);
       this.$router.replace("/NotFound");
+    } finally {
+      this.loading = false;
     }
   }
 };
@@ -197,5 +193,3 @@ export default {
   }
 }
 </style>
-
-
